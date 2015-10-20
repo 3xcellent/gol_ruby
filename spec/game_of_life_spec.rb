@@ -21,8 +21,8 @@ describe GameOfLife do
   let(:height) { double 'height' }
   let(:width) { double 'width' }
 
-  subject do
-    described_class.new(height: height, width: width)
+  before do
+    allow(TermInfo).to receive(:screen_size) { [height, width] }
   end
 
   describe 'a two-dimensional grid of square cells' do
