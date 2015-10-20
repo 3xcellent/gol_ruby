@@ -5,6 +5,6 @@ class Cell
   attr_reader :state
 
   def initialize(state)
-    @state = state
+    @state = state || ALIVE
   end
 end

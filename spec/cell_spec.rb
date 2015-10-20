@@ -26,12 +26,18 @@ describe Cell do
   end
 
   describe '#state' do
-    context 'when alive' do
-      let(:state) { alive }
+    context 'when no state is provided' do
+      let(:state) { nil }
       it 'should be alive' do
         expect(subject.state).to be alive
       end
     end
-  end
 
+    context 'when a state is provied' do
+      let(:state) { double 'state' }
+      it 'should have the given state' do
+        expect(subject.state).to be state
+      end
+    end
+  end
 end
