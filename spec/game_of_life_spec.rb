@@ -22,13 +22,13 @@ describe GameOfLife do
   let(:width) { double 'width' }
 
   subject do
-    described_class.new(height, width)
+    described_class.new(height: height, width: width)
   end
 
   describe 'a two-dimensional grid of square cells' do
     it 'has a height and width' do
-      subject.height = height
-      subject.width = width
+      expect(subject.height).to be height
+      expect(subject.width).to be width
     end
   end
 end
