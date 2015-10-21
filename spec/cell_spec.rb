@@ -18,26 +18,12 @@
 require_relative '../cell'
 
 describe Cell do
-  let(:alive) { described_class::ALIVE }
-  let(:dead) { described_class::DEAD }
+  let(:alive) { true }
+  let(:dead) { false }
 
-  describe '#state' do
-    context 'when no state is provided' do
-      it 'should be alive' do
-        expect(subject.state).to be alive
-      end
-    end
-
-    context 'when a state is provied' do
-      let(:state) { double 'state' }
-
-      subject do
-        described_class.new(state)
-      end
-
-      it 'should have the given state' do
-        expect(subject.state).to be state
-      end
+  describe '#alive?' do
+    it 'defaults be dead' do
+      expect(subject.alive?).to be dead
     end
   end
 end

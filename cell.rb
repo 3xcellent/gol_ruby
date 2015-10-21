@@ -1,10 +1,11 @@
 class Cell
-  ALIVE = '*'
-  DEAD = ' '
+  attr_reader :alive
 
-  attr_reader :state
+  def initialize(alive = false)
+    @alive = alive
+  end
 
-  def initialize(state = ALIVE)
-    @state = state
+  def alive?
+    @alive
   end
 end
