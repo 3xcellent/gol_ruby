@@ -2,8 +2,8 @@ require_relative '../game_of_life'
 
 
 describe GameOfLife do
-  let(:height) { 9 }
-  let(:width) { 11 }
+  let(:height) { 4 }
+  let(:width) { 5 }
 
   before do
     allow(TermInfo).to receive(:screen_size) { [height, width] }
@@ -24,10 +24,20 @@ describe GameOfLife do
   end
 
   describe '#output' do
-    let(:expected_output) { ' ' * height*width }
+    let(:expected_output) { "*   *" +
+                            " *   " +
+                            "  *  " +
+                            "   * " }
 
     it 'represents the gameboard correctly' do
+      subject.cells[0][0].set_alive
+      subject.cells[1][1].set_alive
+      subject.cells[2][2].set_alive
+      subject.cells[3][3].set_alive
+      subject.cells[0][4].set_alive
+
       expect(subject.output).to eq expected_output
     end
   end
+
 end
