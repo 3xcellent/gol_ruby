@@ -8,4 +8,8 @@ class Cell
   def alive?
     @alive
   end
+
+  def set_alive
+    @alive = true
+  end
 end

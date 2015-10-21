@@ -26,4 +26,11 @@ describe Cell do
       expect(subject.alive?).to be dead
     end
   end
+
+  describe '#set_alive' do
+    it 'sets alive to true' do
+      subject.set_alive
+      expect(subject.alive?).to be alive
+    end
+  end
 end
