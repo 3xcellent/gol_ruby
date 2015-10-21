@@ -21,13 +21,8 @@ describe Cell do
   let(:alive) { described_class::ALIVE }
   let(:dead) { described_class::DEAD }
 
-  subject do
-    described_class.new(state)
-  end
-
   describe '#state' do
     context 'when no state is provided' do
-      let(:state) { nil }
       it 'should be alive' do
         expect(subject.state).to be alive
       end
@@ -35,6 +30,11 @@ describe Cell do
 
     context 'when a state is provied' do
       let(:state) { double 'state' }
+
+      subject do
+        described_class.new(state)
+      end
+
       it 'should have the given state' do
         expect(subject.state).to be state
       end
