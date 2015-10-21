@@ -10,10 +10,12 @@ describe GameOfLife do
   end
 
   describe 'a two-dimensional grid of square cells' do
-    it 'has a height and width' do
+    it 'sets the height and width' do
       expect(subject.height).to be height
       expect(subject.width).to be width
+    end
 
+    it 'creates the correct grid of cells' do
       expect(subject.cells.count).to be height
       subject.cells.each do |row|
         expect(row.count).to be width
