@@ -22,4 +22,12 @@ describe GameOfLife do
       end
     end
   end
+
+  describe '#output' do
+    let(:expected_output) { ' ' * height*width }
+
+    it 'represents the gameboard correctly' do
+      expect(subject.output).to eq expected_output
+    end
+  end
 end

@@ -11,9 +11,17 @@ class GameOfLife
     create_cells
   end
 
+  def output
+    @cells.collect do |row|
+      row.collect do |cell|
+        cell.alive? ? '*' : ' '
+      end.join
+    end.join
+  end
+
   private
 
   def create_cells
-    @cells = Array.new(@height) { Array.new(@width) }
+    @cells = Array.new(@height) { Array.new(@width) { Cell.new } }
   end
 end
