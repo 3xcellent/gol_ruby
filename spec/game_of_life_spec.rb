@@ -40,4 +40,24 @@ describe GameOfLife do
     end
   end
 
+  describe '#step' do
+    let(:height) { 5 }
+    let(:width) { 5 }
+
+    let(:expected_output) { "     " +
+                            "     " +
+                            " *** " +
+                            "     " +
+                            "     " }
+
+    it 'produces the correct output' do
+      subject.cells[1][2].set_alive
+      subject.cells[2][2].set_alive
+      subject.cells[3][2].set_alive
+
+      subject.step
+      expect(subject.output).to eq expected_output
+    end
+  end
+
 end

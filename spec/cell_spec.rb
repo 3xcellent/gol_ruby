@@ -18,19 +18,24 @@
 require_relative '../cell'
 
 describe Cell do
-  let(:alive) { true }
-  let(:dead) { false }
-
   describe '#alive?' do
-    it 'defaults be dead' do
-      expect(subject.alive?).to be dead
+    it 'defaults to dead' do
+      expect(subject.alive?).to be false
     end
   end
 
   describe '#set_alive' do
     it 'sets alive to true' do
       subject.set_alive
-      expect(subject.alive?).to be alive
+      expect(subject.alive?).to be true
+    end
+  end
+
+  describe '#step' do
+    it 'sets alive to alive_next_step' do
+      subject.set_alive_next_step
+      subject.step
+      expect(subject.alive?).to be true
     end
   end
 end
