@@ -21,7 +21,7 @@ class GameOfLife
   end
 
   def step
-    set_cells_next_state
+    set_next_states
     step_cells
   end
 
@@ -31,20 +31,11 @@ class GameOfLife
     @cells = Array.new(@height) { Array.new(@width) { Cell.new } }
   end
 
-  def set_cells_next_state
+  def set_next_states
     @cells.each_with_index do |row,x|
       row.each_with_index do |cell,y|
-        set_cell_next_state(cell, x, y)
+        cell.set_next_state(number_living_neighbors(x,y))
       end
-    end
-  end
-
-  def set_cell_next_state(cell, x, y)
-    neighbors_alive = number_living_neighbors(x,y)
-    if (cell.alive? && (neighbors_alive == 2 || neighbors_alive == 3)) || (!cell.alive && neighbors_alive == 3)
-      cell.set_alive_next_step
-    elsif cell.alive?
-      cell.set_dead_next_step
     end
   end
 

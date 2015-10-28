@@ -1,27 +1,32 @@
 class Cell
-  attr_reader :alive
+  attr_reader :next_state
 
-  def initialize(alive = false)
-    @alive = alive
+  ALIVE = true
+  DEAD  = false
+
+  def initialize(state = DEAD)
+    @state = state
   end
 
   def alive?
-    @alive
+    @state
   end
 
-  def set_alive
-    @alive = true
-  end
-
-  def set_alive_next_step
-    @alive_next_step = true
-  end
-
-  def set_dead_next_step
-    @alive_next_step = false
+  def set_state(state)
+    @state = state
   end
 
   def step
-    @alive = @alive_next_step
+    @state = @next_state
+  end
+
+  def set_next_state(neighbors_alive)
+    @next_state = alive_next_state? neighbors_alive
+  end
+
+  private
+
+  def alive_next_state?(n)
+    (alive? && (n == 2 || n == 3)) || (! alive? && n == 3)
   end
 end
