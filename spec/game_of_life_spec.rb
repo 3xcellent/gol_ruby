@@ -39,6 +39,14 @@ describe GameOfLife do
     end
   end
 
+  describe '#step' do
+    it 'prints and cycles the cells' do
+      expect(subject).to receive(:print_output)
+      expect(subject).to receive(:cycle_cells)
+      subject.step
+    end
+  end
+
   describe '#output' do
     let(:expected_output) { "*   *" +
                             " *   " +
