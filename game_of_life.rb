@@ -18,7 +18,7 @@ class GameOfLife
       row.collect do |cell|
         cell.alive? ? '*' : ' '
       end.join
-    end.join("\n")
+    end.join
   end
 
   def step
@@ -52,6 +52,7 @@ class GameOfLife
   def print_output
     Curses.setpos(0, 0)
     Curses.addstr(output)
+    Curses.refresh
   end
 
   def init_cells

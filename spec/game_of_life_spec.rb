@@ -40,9 +40,9 @@ describe GameOfLife do
   end
 
   describe '#output' do
-    let(:expected_output) { "*   *\n" +
-                            " *   \n" +
-                            "  *  \n" +
+    let(:expected_output) { "*   *" +
+                            " *   " +
+                            "  *  " +
                             "   * " }
 
     it 'represents the gameboard correctly' do
@@ -60,10 +60,10 @@ describe GameOfLife do
     let(:height) { 5 }
     let(:width) { 5 }
 
-    let(:expected_output) { "     \n" +
-                            "     \n" +
-                            " *** \n" +
-                            "     \n" +
+    let(:expected_output) { "     " +
+                            "     " +
+                            " *** " +
+                            "     " +
                             "     " }
 
     it 'cycles each cell to the next state' do
