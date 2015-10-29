@@ -20,7 +20,7 @@ describe GameOfLife do
     let(:num_steps) { 10 }
 
     it 'steps the game through the correct number of cycles' do
-      expect(subject).to receive(:step).exactly(num_steps).times
+      expect(subject).to receive(:run_cycle).exactly(num_steps).times
       subject.run(num_steps)
     end
   end
@@ -39,11 +39,11 @@ describe GameOfLife do
     end
   end
 
-  describe '#step' do
+  describe '#run_cycle' do
     it 'prints and cycles the cells' do
       expect(subject).to receive(:print_output)
       expect(subject).to receive(:cycle_cells)
-      subject.step
+      subject.run_cycle
     end
   end
 
@@ -65,22 +65,45 @@ describe GameOfLife do
   end
 
   describe '#cycle_cells' do
-    let(:height) { 5 }
-    let(:width) { 5 }
+    let(:original_cells) { [] }
+    let(:updated_cells)   { [] }
+    let(:cycle_handler) { double 'cycle handler' }
 
-    let(:expected_output) { "     " +
-                            "     " +
-                            " *** " +
-                            "     " +
-                            "     " }
-
-    it 'cycles each cell to the next state' do
-      subject.cells[1][2].set_state(true)
-      subject.cells[2][2].set_state(true)
-      subject.cells[3][2].set_state(true)
-
-      subject.send(:cycle_cells)
-      expect(subject.output).to eq expected_output
+    it 'uses the cycle_handler to cycle the cells' do
+      expect(CycleHandler).to receive(:new).with(subject.cells) { cycle_handler }
+      expect(cycle_handler).to receive(:cycle) { updated_cells }
+      subject.cycle_cells
     end
   end
+
+end
+
+describe CycleHandler do
+  describe '#cycle' do
+    it 'sets the next state for each cell' do
+    end
+
+    it 'tells each cell to cycle' do
+    end
+  end
+
+  #describe '#cycle_cells' do
+    #let(:height) { 5 }
+    #let(:width) { 5 }
+
+    #let(:expected_output) { "     " +
+                            #"     " +
+                            #" *** " +
+                            #"     " +
+                            #"     " }
+
+    #it 'cycles each cell to the next state' do
+      #subject.cells[1][2].set_state(true)
+      #subject.cells[2][2].set_state(true)
+      #subject.cells[3][2].set_state(true)
+
+      #subject.send(:cycle_cells)
+      #expect(subject.output).to eq expected_output
+    #end
+  #end
 end
