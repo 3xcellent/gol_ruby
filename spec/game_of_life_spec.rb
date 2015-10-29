@@ -9,6 +9,22 @@ describe GameOfLife do
     allow(TermInfo).to receive(:screen_size) { [height, width] }
   end
 
+  describe '#setup' do
+    it 'initialized curses' do
+      expect(Curses).to receive(:init_screen)
+      subject.setup
+    end
+  end
+
+  describe '#run' do
+    let(:num_steps) { 10 }
+
+    it 'steps the game through the correct number of cycles' do
+      expect(subject).to receive(:step).exactly(num_steps).times
+      subject.run(num_steps)
+    end
+  end
+
   describe 'a two-dimensional grid of square cells' do
     it 'sets the height and width' do
       expect(subject.height).to be height
@@ -24,9 +40,9 @@ describe GameOfLife do
   end
 
   describe '#output' do
-    let(:expected_output) { "*   *" +
-                            " *   " +
-                            "  *  " +
+    let(:expected_output) { "*   *\n" +
+                            " *   \n" +
+                            "  *  \n" +
                             "   * " }
 
     it 'represents the gameboard correctly' do
@@ -40,24 +56,23 @@ describe GameOfLife do
     end
   end
 
-  describe '#step' do
+  describe '#cycle_cells' do
     let(:height) { 5 }
     let(:width) { 5 }
 
-    let(:expected_output) { "     " +
-                            "     " +
-                            " *** " +
-                            "     " +
+    let(:expected_output) { "     \n" +
+                            "     \n" +
+                            " *** \n" +
+                            "     \n" +
                             "     " }
 
-    it 'produces the correct output' do
+    it 'cycles each cell to the next state' do
       subject.cells[1][2].set_state(true)
       subject.cells[2][2].set_state(true)
       subject.cells[3][2].set_state(true)
 
-      subject.step
+      subject.send(:cycle_cells)
       expect(subject.output).to eq expected_output
     end
   end
-
 end
