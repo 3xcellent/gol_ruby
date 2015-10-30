@@ -8,6 +8,20 @@ describe GameOfLife do
     allow(TermInfo).to receive(:screen_size) { [height, width] }
   end
 
+  describe 'a two-dimensional grid of square cells' do
+    it 'sets the height and width' do
+      expect(subject.height).to be height
+      expect(subject.width).to be width
+    end
+
+    it 'creates the correct grid of cells' do
+      expect(subject.cells.count).to be height
+      subject.cells.each do |row|
+        expect(row.count).to be width
+      end
+    end
+  end
+
   describe '#setup' do
     it 'initialized curses' do
       expect(Curses).to receive(:init_screen)
@@ -21,20 +35,6 @@ describe GameOfLife do
     it 'steps the game through the correct number of cycles' do
       expect(subject).to receive(:run_cycle).exactly(num_steps).times
       subject.run(num_steps)
-    end
-  end
-
-  describe 'a two-dimensional grid of square cells' do
-    it 'sets the height and width' do
-      expect(subject.height).to be height
-      expect(subject.width).to be width
-    end
-
-    it 'creates the correct grid of cells' do
-      expect(subject.cells.count).to be height
-      subject.cells.each do |row|
-        expect(row.count).to be width
-      end
     end
   end
 
