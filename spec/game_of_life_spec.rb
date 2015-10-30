@@ -1,6 +1,5 @@
 require_relative '../game_of_life'
 
-
 describe GameOfLife do
   let(:height) { 4 }
   let(:width) { 5 }
@@ -65,45 +64,14 @@ describe GameOfLife do
   end
 
   describe '#cycle_cells' do
-    let(:original_cells) { [] }
-    let(:updated_cells)   { [] }
+    let(:expected_cells) { double 'expected cells returned' }
     let(:cycle_handler) { double 'cycle handler' }
 
     it 'uses the cycle_handler to cycle the cells' do
-      expect(CycleHandler).to receive(:new).with(subject.cells) { cycle_handler }
-      expect(cycle_handler).to receive(:cycle) { updated_cells }
+      expect(CycleHandler).to receive(:new).with(subject.cells, subject.height, subject.width) { cycle_handler }
+      expect(cycle_handler).to receive(:cycle) { expected_cells }
       subject.cycle_cells
+      expect(subject.cells).to be expected_cells
     end
   end
-
-end
-
-describe CycleHandler do
-  describe '#cycle' do
-    it 'sets the next state for each cell' do
-    end
-
-    it 'tells each cell to cycle' do
-    end
-  end
-
-  #describe '#cycle_cells' do
-    #let(:height) { 5 }
-    #let(:width) { 5 }
-
-    #let(:expected_output) { "     " +
-                            #"     " +
-                            #" *** " +
-                            #"     " +
-                            #"     " }
-
-    #it 'cycles each cell to the next state' do
-      #subject.cells[1][2].set_state(true)
-      #subject.cells[2][2].set_state(true)
-      #subject.cells[3][2].set_state(true)
-
-      #subject.send(:cycle_cells)
-      #expect(subject.output).to eq expected_output
-    #end
-  #end
 end
