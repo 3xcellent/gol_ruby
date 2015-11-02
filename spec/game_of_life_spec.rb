@@ -69,7 +69,7 @@ describe GameOfLife do
 
     it 'uses the cycle_handler to cycle the cells' do
       expect(CycleHandler).to receive(:new).with(subject.cells, subject.height, subject.width) { cycle_handler }
-      expect(cycle_handler).to receive(:cycle) { expected_cells }
+      expect(cycle_handler).to receive(:cycle_cells) { expected_cells }
       subject.cycle_cells
       expect(subject.cells).to be expected_cells
     end

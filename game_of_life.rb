@@ -22,7 +22,7 @@ class GameOfLife
   end
 
   def cycle_cells
-    @cells = CycleHandler.new(@cells, @height, @width).cycle
+    @cells = CycleHandler.new(@cells, @height, @width).cycle_cells
   end
 
   def setup
@@ -34,7 +34,7 @@ class GameOfLife
     [Cell::ALIVE, Cell::DEAD].sample
   end
 
-  def run(steps = 1000)
+  def run(steps = 250)
     steps.times do
       run_cycle
     end
@@ -43,6 +43,7 @@ class GameOfLife
   def run_cycle
     print_output
     cycle_cells
+    sleep 0.05
   end
 
   private
