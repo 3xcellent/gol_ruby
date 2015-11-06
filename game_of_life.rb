@@ -3,7 +3,10 @@ require_relative 'cell'
 require 'byebug'
 require 'curses'
 
+
 class GameOfLife
+  include Curses
+
   attr_reader :height, :width, :cells
 
   def initialize
@@ -27,6 +30,12 @@ class GameOfLife
 
   def setup
     Curses.init_screen
+    Curses.start_color
+
+    Curses.init_pair(COLOR_BLUE,COLOR_BLUE,COLOR_BLACK)
+    Curses.init_pair(COLOR_RED,COLOR_RED,COLOR_BLACK)
+    Curses.init_pair(COLOR_GREEN,COLOR_GREEN,COLOR_BLACK)
+
     init_cells
   end
 
@@ -41,13 +50,52 @@ class GameOfLife
   end
 
   def run_cycle
-    print_output
+    update_screen
     cycle_cells
     sleep 0.05
   end
 
   private
 
+  def for_each_cell(&block)
+    @cells.each_with_index do |row, x|
+      row.each_with_index do |cell, y|
+        case block.arity
+        when 0
+          yield
+        when 1
+          yield cell
+        when 3
+          yield cell, x, y
+        end
+      end
+    end
+  end
+
+  def update_screen
+    for_each_cell do |cell, x, y|
+      Curses.setpos(x, y)
+      print_cell(cell)
+    end
+    Curses.refresh
+  end
+
+  def print_cell(cell)
+    char = cell.alive? ? '*' : ' '
+
+    if cell.previous_state == cell.alive?
+      color = COLOR_BLUE
+    elsif cell.alive?
+      color = COLOR_GREEN
+    else
+      color = COLOR_RED
+      char = '*'
+    end
+
+    Curses.attron(color_pair(color)|A_NORMAL) do
+      Curses.addstr(char)
+    end
+  end
 
   def print_output
     Curses.setpos(0, 0)

@@ -1,11 +1,12 @@
 class Cell
-  attr_reader :next_state
+  attr_reader :next_state, :previous_state
 
   ALIVE = true
   DEAD  = false
 
   def initialize(state = DEAD)
     @state = state
+    @previous_state = DEAD
   end
 
   def alive?
@@ -17,6 +18,7 @@ class Cell
   end
 
   def step
+    @previous_state = @state
     @state = @next_state
   end
 
