@@ -2,6 +2,8 @@ require 'terminfo'
 require 'curses'
 require_relative 'cell'
 require_relative 'cycle_handler'
+require_relative 'background_handler'
+
 require 'byebug'
 
 include Curses
@@ -10,12 +12,13 @@ class GameOfLife
   attr_reader :height, :width, :cells
 
   NUM_STEPS_PER_RUN = 500
-  REFRESH_RATE = 0#.01
+  REFRESH_RATE = 0.1
 
   def initialize
     screen_size = TermInfo.screen_size
     @height = screen_size[0]
     @width = screen_size[1]
+    @background = BackgroundHandler.new(@height, @width)
     create_cells
   end
 
@@ -36,6 +39,9 @@ class GameOfLife
     end
   end
 
+  def cell_chars
+  end
+
   private
 
   def cycle_cells
@@ -53,7 +59,7 @@ class GameOfLife
   def run_cycle
     update_screen
     cycle_cells
-    #sleep REFRESH_RATE
+    sleep REFRESH_RATE
   end
 
   def for_each_cell(&block)
@@ -99,7 +105,14 @@ class GameOfLife
     end
   end
 
+
   def create_cells
-    @cells = Array.new(@height) { Array.new(@width) { Cell.new(random_char) } }
+    cell_rows = Array.new(@height)
+    cell_rows.each_with_index do |row, x|
+      row = Array.new(@width)
+      row.each_with_index do |cell, y|
+        cell = Cell.new(@background.char_for_cell(x,y))
+      end
+    end
   end
 end
