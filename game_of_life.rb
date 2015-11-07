@@ -43,7 +43,7 @@ class GameOfLife
     [Cell::ALIVE, Cell::DEAD].sample
   end
 
-  def run(steps = 250)
+  def run(steps = 1000)
     steps.times do
       run_cycle
     end
@@ -52,7 +52,7 @@ class GameOfLife
   def run_cycle
     update_screen
     cycle_cells
-    sleep 0.05
+    sleep 0.01
   end
 
   private
